@@ -2174,7 +2174,16 @@ body[data-style="minimalist"] .btn-checkout {
   }
 
   .main-nav {
-    display: none; /* Hide detailed menu on mobile for a clean mockup experience */
+    max-height: 0;
+    opacity: 0;
+    display: block;
+    pointer-events: none;
+  }
+
+  .main-nav.open {
+    max-height: 420px;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .style-controller {
