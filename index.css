@@ -2085,17 +2085,32 @@ body[data-style="minimalist"] .btn-checkout {
    15. RESPONSIVE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 1024px) {
+  .header-container {
+    position: relative;
+  }
+
   .mobile-nav-toggle {
     display: inline-flex;
   }
 
   .main-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
     max-height: 0;
     opacity: 0;
+    background: rgba(11, 11, 10, 0.96);
+    border-bottom: var(--border-style);
+    z-index: 80;
+    pointer-events: none;
   }
 
   .main-nav.open {
-    max-height: 420px;
+    max-height: 520px;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .main-nav ul {
@@ -2178,10 +2193,18 @@ body[data-style="minimalist"] .btn-checkout {
     opacity: 0;
     display: block;
     pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(11, 11, 10, 0.96);
+    border-bottom: var(--border-style);
+    z-index: 80;
   }
 
   .main-nav.open {
-    max-height: 420px;
+    max-height: 520px;
     opacity: 1;
     pointer-events: auto;
   }
