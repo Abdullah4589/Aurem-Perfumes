@@ -9,20 +9,22 @@
   <meta property="og:description" content="AUREUM perfumes are luxury fragrance experiences built around rare oud, ambergris, gold leaf, and dark oriental accords. Discover collections, journal stories, and bespoke scent matches.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/perfume_aureum.png">
-  <meta name="theme-color" content="#0b0b0a">
-  <!-- Google Fonts for the Style Variations -->
+  <meta name="theme-color" content="#0a0908">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Montserrat:wght@200;300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 </head>
 <body data-style="classic">
+  <!-- Film grain overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
   <!-- Style Controller Widget -->
-  <div class="style-controller" id="styleController" aria-label="Visual Style Toggle">
+  <div class="style-controller collapsed" id="styleController" aria-label="Visual Style Toggle">
     <div class="style-controller-header">
-      <span>VISUAL ARCHETYPE</span>
-      <button class="style-controller-toggle" id="styleControllerToggle" aria-expanded="true" aria-label="Toggle style panel">
-        <span class="toggle-label">Hide</span>
+      <span>Visual Archetype</span>
+      <button class="style-controller-toggle" id="styleControllerToggle" aria-expanded="false" aria-label="Toggle style panel">
+        <span class="toggle-label">Show</span>
       </button>
     </div>
     <div class="style-buttons">
@@ -51,11 +53,9 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- App Header & Navigation -->
-  <header class="app-header">
+  <header class="app-header" id="appHeader">
     <div class="header-container">
-      <a href="#home" class="brand-logo" id="logoLink">
-        <span class="logo-symbol">♦</span> AUREUM
-      </a>
+      <a href="#home" class="brand-logo" id="logoLink">AUREUM</a>
       <button class="mobile-nav-toggle" id="mobileNavToggle" aria-expanded="false" aria-label="Open navigation menu">
         <span></span>
       </button>
@@ -72,8 +72,8 @@
 
       <div class="header-actions">
         <button class="action-btn cart-toggle-btn" id="cartToggleBtn" aria-label="Open Cart">
-          <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
-            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6zM3 6h18M16 10a4 4 0 01-8 0" />
+          <svg class="icon" viewBox="0 0 24 24" width="21" height="21">
+            <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6zM3 6h18M16 10a4 4 0 01-8 0" />
           </svg>
           <span class="cart-badge" id="cartBadge">0</span>
         </button>
@@ -83,151 +83,146 @@
 
   <!-- Main Viewport containing active panels -->
   <main class="viewport">
-    
+
     <!-- PAGE 1: HOME PAGE -->
     <section id="page-home" class="page-panel active">
       <div class="hero-section">
-        <div class="hero-bg-glow"></div>
+        <div class="hero-bg-glow" aria-hidden="true"></div>
+        <div class="hero-watermark" aria-hidden="true">Au</div>
         <div class="hero-content">
-          <div class="brand-typing-wrapper">
-            <!-- Typing effect will run here via JS for smooth configuration -->
-            <h1 class="typing-name" id="heroBrandName"></h1>
-            <p class="typing-tagline" id="heroTagline"></p>
-          </div>
-          <p class="hero-intro-text" id="heroDescription"></p>
+          <span class="hero-overline">Maison de Haute Parfumerie</span>
+          <h1 class="hero-brand-name" id="heroBrandName" aria-label="AUREUM">AUREUM</h1>
+          <p class="hero-tagline" id="heroTagline">Liquid gold, bottled darkness.</p>
+          <p class="hero-intro-text" id="heroDescription">Bespoke fragrances composed from rare oud, marine ambergris, and suspended flakes of 24k gold.</p>
           <div class="hero-actions" id="heroActions">
-            <button class="btn btn-primary btn-typewriter" id="heroBtnShop" onclick="navigateTo('shop')"></button>
-            <button class="btn btn-secondary btn-typewriter" id="heroBtnAbout" onclick="navigateTo('about')"></button>
+            <button class="btn btn-primary" id="heroBtnShop" onclick="navigateTo('shop')">Explore the Collection</button>
+            <button class="btn btn-ghost" id="heroBtnAbout" onclick="navigateTo('about')">Our Story</button>
           </div>
         </div>
         <div class="hero-visual">
           <div class="floating-bottle-wrapper">
-            <div class="ambient-glowing-ring"></div>
+            <div class="ambient-glowing-ring" aria-hidden="true"></div>
+            <div class="hero-bottle-halo" aria-hidden="true"></div>
             <img src="images/perfume_aureum.png" alt="Aureum Signature Perfume" class="hero-perfume-image floating-animation" id="heroPerfumeImg">
           </div>
+          <span class="hero-side-label" aria-hidden="true">Eau de Parfum &mdash; 100 ml</span>
+        </div>
+        <div class="hero-baseline" aria-hidden="true"></div>
+      </div>
+
+      <!-- Kinetic notes marquee -->
+      <div class="notes-marquee" aria-hidden="true">
+        <div class="notes-track">
+          <span>Wild Oud</span><i>&#9830;</i><span>Marine Ambergris</span><i>&#9830;</i><span>24k Gold Leaf</span><i>&#9830;</i><span>Damask Rose</span><i>&#9830;</i><span>Persian Saffron</span><i>&#9830;</i><span>Smoked Honey</span><i>&#9830;</i><span>Mysore Sandalwood</span><i>&#9830;</i>
+          <span>Wild Oud</span><i>&#9830;</i><span>Marine Ambergris</span><i>&#9830;</i><span>24k Gold Leaf</span><i>&#9830;</i><span>Damask Rose</span><i>&#9830;</i><span>Persian Saffron</span><i>&#9830;</i><span>Smoked Honey</span><i>&#9830;</i><span>Mysore Sandalwood</span><i>&#9830;</i>
         </div>
       </div>
 
-      <!-- Feature Highlight / Style Showroom Banner -->
-      <div class="section-divider reveal-left">
-        <span class="line"></span>
-        <span class="symbol">♦</span>
-        <span class="line"></span>
-      </div>
+      <!-- The Triad Collection -->
+      <div class="featured-preview home-section">
+        <header class="section-heading reveal-left">
+          <span class="section-overline">The Triad Collection</span>
+          <h2 class="section-title">Three Archetypes<br><em>of Olfactory Darkness</em></h2>
+        </header>
 
-      <div class="featured-preview">
-        <h2 class="section-title reveal-left">THE TRIAD COLLECTION</h2>
-        <p class="section-subtitle reveal-left">Three archetypes of olfactory darkness, each paired with a visual dimension.</p>
-        
         <div class="triad-grid">
-          <!-- Card 1: AUREUM -->
-          <div class="triad-card reveal-left" role="button" tabindex="0" aria-label="Explore AUREUM" onclick="viewProductDetail('aureum')">
+          <article class="triad-card reveal-left" role="button" tabindex="0" aria-label="Explore AUREUM" onclick="viewProductDetail('aureum')">
             <div class="card-image-wrapper">
-              <img src="images/perfume_aureum.png" alt="Aureum perfume" class="triad-img">
+              <img src="images/perfume_aureum.png" alt="Aureum perfume" class="triad-img" loading="lazy">
             </div>
             <div class="card-content">
-              <div class="tag">Warm & Ambery</div>
+              <div class="tag">Warm &amp; Ambery</div>
               <h3>AUREUM</h3>
               <p>Gold leaf, rare oud, and smoked dark honey.</p>
-              <div class="price">$220</div>
-              <button class="card-btn">Explore Scent</button>
+              <div class="card-foot">
+                <span class="price">$220</span>
+                <span class="card-btn">Explore <span class="arrow">&rarr;</span></span>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Card 2: ECLIPSE -->
-          <div class="triad-card reveal-left" role="button" tabindex="0" aria-label="Explore ÉCLIPSE" onclick="viewProductDetail('eclipse')">
+          <article class="triad-card triad-card-feature reveal-left" role="button" tabindex="0" aria-label="Explore ÉCLIPSE" onclick="viewProductDetail('eclipse')">
             <div class="card-image-wrapper">
-              <img src="images/perfume_eclipse.png" alt="Eclipse perfume" class="triad-img">
+              <img src="images/perfume_eclipse.png" alt="Eclipse perfume" class="triad-img" loading="lazy">
             </div>
             <div class="card-content">
-              <div class="tag">Woody & Incense</div>
-              <h3>ÉCLIPSE</h3>
+              <div class="tag">Woody &amp; Incense</div>
+              <h3>&Eacute;CLIPSE</h3>
               <p>Matte minerals, dark ash, and burnt golden saffron.</p>
-              <div class="price">$245</div>
-              <button class="card-btn">Explore Scent</button>
+              <div class="card-foot">
+                <span class="price">$245</span>
+                <span class="card-btn">Explore <span class="arrow">&rarr;</span></span>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Card 3: NOCTURNE -->
-          <div class="triad-card reveal-left" role="button" tabindex="0" aria-label="Explore NOCTURNE" onclick="viewProductDetail('nocturne')">
+          <article class="triad-card reveal-left" role="button" tabindex="0" aria-label="Explore NOCTURNE" onclick="viewProductDetail('nocturne')">
             <div class="card-image-wrapper">
-              <img src="images/perfume_nocturne.png" alt="Nocturne perfume" class="triad-img">
+              <img src="images/perfume_nocturne.png" alt="Nocturne perfume" class="triad-img" loading="lazy">
             </div>
             <div class="card-content">
-              <div class="tag">Floric & Spicy</div>
+              <div class="tag">Floral &amp; Spicy</div>
               <h3>NOCTURNE</h3>
               <p>Frosted dark rose, black pepper, and warm ambergris.</p>
-              <div class="price">$260</div>
-              <button class="card-btn">Explore Scent</button>
+              <div class="card-foot">
+                <span class="price">$260</span>
+                <span class="card-btn">Explore <span class="arrow">&rarr;</span></span>
+              </div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
 
-      <div class="section-divider reveal-left">
-        <span class="line"></span>
-        <span class="symbol">♦</span>
-        <span class="line"></span>
-      </div>
-
-      <div class="home-collection-preview reveal-left">
-        <h2 class="section-title">Explore Our Collections</h2>
-        <p class="section-subtitle">Signature programs, evening editions, and curated ritual sets designed for every mood.</p>
-        <div class="collection-preview-grid">
-          <div class="collection-card reveal-left">
-            <span class="collection-label">Signature Heritage</span>
-            <h3>Warm Amber & Oud</h3>
-            <p>Golden textures, resinous depth, and timeless luxury. Featured fragrances include AUREUM, SOLIS, and AMBER GROVE.</p>
-            <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('warm')">Shop Warm Ambers</button>
-          </div>
-          <div class="collection-card reveal-left">
-            <span class="collection-label">Nocturne Editions</span>
-            <h3>Dark Floral & Mineral</h3>
-            <p>Smoked petals, peppered woods, and midnight depth. Discover NOCTURNE, VELVET DUSK, and LUNE RÊVERIE.</p>
-            <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('limited')">View Nightfall</button>
-          </div>
-          <div class="collection-card reveal-left">
-            <span class="collection-label">Ritual Gift Sets</span>
-            <h3>Presentation & Ceremony</h3>
-            <p>Complete sets with duet rituals, hand-finished packaging, and sample companions for gifting.</p>
-            <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('set')">Discover Gift Sets</button>
-          </div>
+      <!-- Collections editorial index -->
+      <div class="home-collection-preview home-section">
+        <header class="section-heading reveal-left">
+          <h2 class="section-title">Curated <em>Collections</em></h2>
+          <p class="section-subtitle">Signature programs, evening editions, and ritual sets designed for every mood.</p>
+        </header>
+        <div class="collection-index reveal-left">
+          <button class="collection-row" onclick="navigateTo('shop'); renderShopProducts('warm')">
+            <span class="row-label">Signature Heritage</span>
+            <span class="row-title">Warm Amber &amp; Oud</span>
+            <span class="row-note">AUREUM &middot; SOLIS &middot; AMBER GROVE</span>
+            <span class="row-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+          <button class="collection-row" onclick="navigateTo('shop'); renderShopProducts('limited')">
+            <span class="row-label">Nocturne Editions</span>
+            <span class="row-title">Dark Floral &amp; Mineral</span>
+            <span class="row-note">NOCTURNE &middot; VELVET DUSK &middot; LUNE R&Ecirc;VERIE</span>
+            <span class="row-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+          <button class="collection-row" onclick="navigateTo('shop'); renderShopProducts('set')">
+            <span class="row-label">Ritual Gift Sets</span>
+            <span class="row-title">Presentation &amp; Ceremony</span>
+            <span class="row-note">AURIC DUO &middot; MARITIME GOLD &middot; OBSIDIAN SHADE</span>
+            <span class="row-arrow" aria-hidden="true">&rarr;</span>
+          </button>
         </div>
       </div>
 
-      <!-- Interactive Profiler / Testimonials Section (New Content) -->
-      <div class="section-divider reveal-left">
-        <span class="line"></span>
-        <span class="symbol">♦</span>
-        <span class="line"></span>
-      </div>
-
-      <div class="home-extra-content" style="margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: start;">
-        <!-- Interactive Profiler Section -->
-        <div class="profiler-teaser reveal-left" style="background: var(--bg-section); border: var(--border-style); border-radius: var(--border-radius); padding: 40px; box-shadow: 0 10px 20px var(--shadow-color); height: 100%;">
+      <!-- Profiler + Reviews -->
+      <div class="home-extra-content home-section">
+        <div class="profiler-teaser reveal-left">
           <div class="profiler-content">
-            <span class="tag" style="font-family: var(--font-header); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--accent-color); text-transform: uppercase; display: block; margin-bottom: 10px;">Bespoke Guidance</span>
-            <h2 style="font-size: 1.6rem; letter-spacing: 0.05em; margin-bottom: 12px;">Discover Your Scent Match</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 25px;">Take our signature three-step olfactory quiz. Match your environment, preferred textures, and sensory moods to find your perfect archetype.</p>
-            <button class="btn btn-secondary" onclick="openProfilerQuiz()" style="width: 100%;">Begin Profiling Quiz</button>
+            <span class="panel-label">Bespoke Guidance</span>
+            <h2 class="panel-title">Discover Your <em>Scent Match</em></h2>
+            <p class="panel-copy">A three-step olfactory quiz. Match your environment, preferred textures, and sensory moods to find your archetype.</p>
+            <button class="btn btn-ghost" onclick="openProfilerQuiz()">Begin the Profiling Quiz</button>
           </div>
         </div>
 
-        <!-- Connoisseur Reviews Section -->
-        <div class="testimonials-preview reveal-left" style="background: var(--bg-section); border: var(--border-style); border-radius: var(--border-radius); padding: 40px; box-shadow: 0 10px 20px var(--shadow-color); height: 100%;">
-          <span class="tag" style="font-family: var(--font-header); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--accent-color); text-transform: uppercase; display: block; margin-bottom: 10px;">Connoisseur Reviews</span>
-          <h2 style="font-size: 1.6rem; letter-spacing: 0.05em; margin-bottom: 12px;">Olfactory Opinions</h2>
-          <div class="testimonials-list" style="display:flex; flex-direction:column; gap:20px;">
-            <div class="testimonial-card">
-              <div class="stars" style="color:var(--accent-color); font-size:0.85rem; margin-bottom:6px;">★★★★★</div>
-              <p class="quote" style="font-family:var(--font-body); font-style:italic; font-size:0.85rem; color:var(--text-muted); line-height:1.5; margin-bottom:4px;">"AUREUM is a rare masterpiece. The agarwood baseline carries the golden flakes elegantly, creating a rich sensory weight."</p>
-              <span class="author" style="font-family:var(--font-header); font-size:0.65rem; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em;">— Scent Editorial, Paris</span>
-            </div>
-            <div class="testimonial-card" style="border-top: 1px solid rgba(255,255,255,0.03); padding-top:15px;">
-              <div class="stars" style="color:var(--accent-color); font-size:0.85rem; margin-bottom:6px;">★★★★★</div>
-              <p class="quote" style="font-family:var(--font-body); font-style:italic; font-size:0.85rem; color:var(--text-muted); line-height:1.5; margin-bottom:4px;">"With ÉCLIPSE, they have successfully bottled mineral shadow. The slate and saffron notes are dry, metallic, and futuristic."</p>
-              <span class="author" style="font-family:var(--font-header); font-size:0.65rem; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em;">— The Fragrance Bureau</span>
-            </div>
+        <div class="testimonials-preview reveal-left">
+          <span class="panel-label">Connoisseur Reviews</span>
+          <div class="testimonials-list">
+            <blockquote class="testimonial-card">
+              <p class="quote">&ldquo;AUREUM is a rare masterpiece. The agarwood baseline carries the golden flakes elegantly, creating a rich sensory weight.&rdquo;</p>
+              <cite class="author">Scent Editorial, Paris</cite>
+            </blockquote>
+            <blockquote class="testimonial-card">
+              <p class="quote">&ldquo;With &Eacute;CLIPSE, they have successfully bottled mineral shadow. The slate and saffron notes are dry, metallic, and futuristic.&rdquo;</p>
+              <cite class="author">The Fragrance Bureau</cite>
+            </blockquote>
           </div>
         </div>
       </div>
@@ -235,12 +230,13 @@
 
     <!-- PAGE 1.5: COLLECTIONS PAGE -->
     <section id="page-collections" class="page-panel">
-      <div class="collections-header reveal-left">
-        <h1 class="section-title">Curated Collections</h1>
-        <p class="section-subtitle">Three exceptional programs designed for every taste: heritage warmth, shadowed nightfall, and celebratory gifting.</p>
-      </div>
+      <header class="page-hero reveal-left">
+        <span class="section-overline">Programs of the House</span>
+        <h1 class="page-title">Curated <em>Collections</em></h1>
+        <p class="page-lede">Heritage warmth, shadowed nightfall, and celebratory gifting.</p>
+      </header>
       <div class="collections-grid reveal-left">
-        <div class="collection-card">
+        <article class="collection-card">
           <div class="collection-card-header"><span>Signature Heritage</span></div>
           <h3>Traditional depth with modern shine.</h3>
           <p>Warm ambers and smoky oud framed with 24k gold leaf, built for those who desire noble complexity.</p>
@@ -249,21 +245,21 @@
             <li>SOLIS</li>
             <li>EMBER WALTZ</li>
           </ul>
-          <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('all')">Explore Signature</button>
-        </div>
-        <div class="collection-card">
+          <button class="btn btn-ghost" onclick="navigateTo('shop'); renderShopProducts('all')">Explore Signature</button>
+        </article>
+        <article class="collection-card">
           <div class="collection-card-header"><span>Nightfall Editions</span></div>
           <h3>Dark floral, mineral, and velvet mystery.</h3>
           <p>Curated for evening rituals and shadowed luxury, with limited-run fragrances that reveal themselves slowly.</p>
           <ul>
             <li>NOCTURNE</li>
             <li>VELVET DUSK</li>
-            <li>LUNE RÊVERIE</li>
+            <li>LUNE R&Ecirc;VERIE</li>
           </ul>
-          <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('limited')">View Nightfall Editions</button>
-        </div>
-        <div class="collection-card">
-          <div class="collection-card-header"><span>Gift & Ritual Sets</span></div>
+          <button class="btn btn-ghost" onclick="navigateTo('shop'); renderShopProducts('limited')">View Nightfall Editions</button>
+        </article>
+        <article class="collection-card">
+          <div class="collection-card-header"><span>Gift &amp; Ritual Sets</span></div>
           <h3>Presented for the collector and the connoisseur.</h3>
           <p>Complete experiences with duet formats, ritual sets, and handcrafted presentation for gifting in luminous style.</p>
           <ul>
@@ -271,29 +267,30 @@
             <li>MARITIME GOLD</li>
             <li>OBSIDIAN SHADE</li>
           </ul>
-          <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('set')">Discover Gift Sets</button>
-        </div>
+          <button class="btn btn-ghost" onclick="navigateTo('shop'); renderShopProducts('set')">Discover Gift Sets</button>
+        </article>
       </div>
     </section>
 
     <!-- PAGE 2: SHOP PAGE -->
     <section id="page-shop" class="page-panel">
-      <div class="shop-header reveal-left">
-        <h1 class="shop-title">The Collection</h1>
-        <p class="shop-description">Select your signature scent. Available in handcrafted 100ml flacons.</p>
-        
-        <div class="filter-bar">
-          <button class="filter-btn active" data-filter="all">All Fragrances</button>
-          <button class="filter-btn" data-filter="warm">Warm Amber</button>
-          <button class="filter-btn" data-filter="woody">Smoky Wood</button>
-          <button class="filter-btn" data-filter="spicy">Dark Floral</button>
-          <button class="filter-btn" data-filter="limited">Limited Editions</button>
-          <button class="filter-btn" data-filter="set">Gift Sets</button>
-        </div>
+      <header class="page-hero reveal-left">
+        <span class="section-overline">The Atelier Shelf</span>
+        <h1 class="page-title">The <em>Collection</em></h1>
+        <p class="page-lede">Select your signature scent, presented in handcrafted 100 ml flacons.</p>
+      </header>
+
+      <div class="filter-bar reveal-left">
+        <button class="filter-btn active" data-filter="all">All Fragrances</button>
+        <button class="filter-btn" data-filter="warm">Warm Amber</button>
+        <button class="filter-btn" data-filter="woody">Smoky Wood</button>
+        <button class="filter-btn" data-filter="spicy">Dark Floral</button>
+        <button class="filter-btn" data-filter="limited">Limited Editions</button>
+        <button class="filter-btn" data-filter="set">Gift Sets</button>
       </div>
 
       <div class="shop-grid" id="shopGrid">
-        <!-- Products dynamically rendered by JS to support sorting, filtering, and seamless quick view interaction -->
+        <!-- Products dynamically rendered by JS -->
       </div>
     </section>
 
@@ -301,9 +298,9 @@
     <section id="page-detail" class="page-panel">
       <div class="detail-navigation">
         <a href="#" class="back-link" onclick="navigateTo('shop'); return false;">
-          <svg class="icon back-icon" viewBox="0 0 24 24" width="20" height="20">
-            <line fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" x1="19" y1="12" x2="5" y2="12" />
-            <polyline fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="12,19 5,12 12,5" />
+          <svg class="icon back-icon" viewBox="0 0 24 24" width="18" height="18">
+            <line fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" x1="19" y1="12" x2="5" y2="12" />
+            <polyline fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="12,19 5,12 12,5" />
           </svg>
           Back to Collection
         </a>
@@ -318,22 +315,22 @@
     <section id="page-about" class="page-panel">
       <div class="about-hero">
         <div class="about-hero-img-container">
-          <img src="images/about_hero.png" alt="Oud Wood and Gold leaves" class="about-hero-img">
+          <img src="images/about_hero.png" alt="Oud wood, rose petals, and gold leaf" class="about-hero-img">
           <div class="about-hero-overlay"></div>
         </div>
         <div class="about-hero-content reveal-left">
-          <span class="gold-caps-label">ESTABLISHED IN SHADOWS</span>
-          <h1>The Alchemy of AUREUM</h1>
-          <p>Where high-contrast aesthetics meet the fine art of classical perfumery.</p>
+          <span class="section-overline">Established in Shadows</span>
+          <h1 class="page-title">The Alchemy<br><em>of AUREUM</em></h1>
+          <p class="page-lede">Where high-contrast aesthetics meet the fine art of classical perfumery.</p>
         </div>
       </div>
 
       <div class="about-content">
         <div class="about-grid-block">
           <div class="about-text-column reveal-left">
-            <h2>The Vision</h2>
+            <h2 class="block-title">The Vision</h2>
             <p>
-              AUREUM was founded on the philosophy that a fragrance should not simply be worn; it should be felt as a dramatic presence. We blend the absolute darkest, most complex base notes with shimmering elements of light—embodied literally in our signature flakes of 24k gold suspended inside each flask.
+              AUREUM was founded on the philosophy that a fragrance should not simply be worn; it should be felt as a dramatic presence. We blend the darkest, most complex base notes with shimmering elements of light, embodied literally in our signature flakes of 24k gold suspended inside each flask.
             </p>
             <p>
               By fusing raw ingredients like ancient burning oud, black vetiver, and smoky obsidian minerals with warm gold leaf oils, we create a sensory contrast that shifts, morphs, and deepens over the course of hours.
@@ -341,14 +338,14 @@
           </div>
           <div class="about-philosophy-quote reveal-left">
             <p class="quote-text">
-              "To bottle darkness is an art; to make it shine is alchemy."
+              &ldquo;To bottle darkness is an art; to make it shine is alchemy.&rdquo;
             </p>
-            <span class="quote-author">— Master Perfumer, AUREUM</span>
+            <span class="quote-author">Master Perfumer, AUREUM</span>
           </div>
         </div>
 
         <div class="interactive-steps-section">
-          <h2>The Craftsmanship</h2>
+          <h2 class="block-title centered">The Craftsmanship</h2>
           <div class="steps-grid">
             <div class="step-card reveal-left">
               <div class="step-num">I</div>
@@ -368,27 +365,26 @@
           </div>
         </div>
 
-        <!-- Ingredient Gallery (New Content) -->
-        <div class="ingredient-gallery-section reveal-left" style="margin-top: 60px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px;">
-          <h2 class="section-title reveal-left" style="text-align: center; font-size: 1.8rem; margin-bottom: 8px;">Olfactory Ingredients</h2>
-          <p class="section-subtitle reveal-left" style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 40px;">Click on any raw material to inspect its extraction alchemy.</p>
-          
-          <div class="ingredient-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect Agarwood oud" onclick="inspectIngredient('oud')" style="background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url('images/about_hero.png'); background-size: cover; background-position: center; border: var(--border-style); border-radius: var(--border-radius); padding: 30px; height: 180px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 8px 15px var(--shadow-color); position: relative; overflow: hidden;">
-              <h3 style="font-family: var(--font-header); font-size: 1.1rem; margin-bottom: 4px; color: var(--text-color); z-index: 2;">Agarwood (Oud)</h3>
-              <span class="ing-tag" style="font-family: var(--font-body); font-style: italic; font-size: 0.75rem; color: var(--accent-color); z-index: 2;">The Black Gold</span>
+        <div class="ingredient-gallery-section reveal-left">
+          <h2 class="block-title centered">Olfactory Ingredients</h2>
+          <p class="block-subtitle">Select any raw material to inspect its extraction alchemy.</p>
+
+          <div class="ingredient-grid">
+            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect Agarwood oud" onclick="inspectIngredient('oud')">
+              <h3>Agarwood (Oud)</h3>
+              <span class="ing-tag">The Black Gold</span>
             </div>
-            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect ambergris" onclick="inspectIngredient('ambergris')" style="background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url('images/about_hero.png'); background-size: cover; background-position: center; border: var(--border-style); border-radius: var(--border-radius); padding: 30px; height: 180px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 8px 15px var(--shadow-color); position: relative; overflow: hidden;">
-              <h3 style="font-family: var(--font-header); font-size: 1.1rem; margin-bottom: 4px; color: var(--text-color); z-index: 2;">Marine Ambergris</h3>
-              <span class="ing-tag" style="font-family: var(--font-body); font-style: italic; font-size: 0.75rem; color: var(--accent-color); z-index: 2;">The Salted Shore</span>
+            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect ambergris" onclick="inspectIngredient('ambergris')">
+              <h3>Marine Ambergris</h3>
+              <span class="ing-tag">The Salted Shore</span>
             </div>
-            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect crimson rose" onclick="inspectIngredient('rose')" style="background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url('images/about_hero.png'); background-size: cover; background-position: center; border: var(--border-style); border-radius: var(--border-radius); padding: 30px; height: 180px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 8px 15px var(--shadow-color); position: relative; overflow: hidden;">
-              <h3 style="font-family: var(--font-header); font-size: 1.1rem; margin-bottom: 4px; color: var(--text-color); z-index: 2;">Crimson Rose</h3>
-              <span class="ing-tag" style="font-family: var(--font-body); font-style: italic; font-size: 0.75rem; color: var(--accent-color); z-index: 2;">The Velvet Core</span>
+            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect crimson rose" onclick="inspectIngredient('rose')">
+              <h3>Crimson Rose</h3>
+              <span class="ing-tag">The Velvet Core</span>
             </div>
-            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect 24k gold leaf" onclick="inspectIngredient('gold')" style="background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url('images/about_hero.png'); background-size: cover; background-position: center; border: var(--border-style); border-radius: var(--border-radius); padding: 30px; height: 180px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 8px 15px var(--shadow-color); position: relative; overflow: hidden;">
-              <h3 style="font-family: var(--font-header); font-size: 1.1rem; margin-bottom: 4px; color: var(--text-color); z-index: 2;">24k Gold Leaf</h3>
-              <span class="ing-tag" style="font-family: var(--font-body); font-style: italic; font-size: 0.75rem; color: var(--accent-color); z-index: 2;">The Liquid Light</span>
+            <div class="ingredient-card" role="button" tabindex="0" aria-label="Inspect 24k gold leaf" onclick="inspectIngredient('gold')">
+              <h3>24k Gold Leaf</h3>
+              <span class="ing-tag">The Liquid Light</span>
             </div>
           </div>
         </div>
@@ -397,52 +393,56 @@
 
     <!-- PAGE 5: JOURNAL PAGE -->
     <section id="page-journal" class="page-panel">
-      <div class="journal-header reveal-left">
-        <h1 class="section-title">Journal</h1>
-        <p class="section-subtitle">Stories from the atelier, scent rituals, and the inspirations behind each fragrance.</p>
-      </div>
+      <header class="page-hero reveal-left">
+        <span class="section-overline">From the Atelier</span>
+        <h1 class="page-title">The <em>Journal</em></h1>
+        <p class="page-lede">Stories from the atelier, scent rituals, and the inspirations behind each fragrance.</p>
+      </header>
       <div class="journal-grid reveal-left">
         <article class="journal-card">
           <span class="journal-tag">Atelier Notes</span>
           <h3>How AUREUM became an amber legend</h3>
           <p>From rare oud distillation to the first sheet of gold leaf suspended in perfume, the making of AUREUM is a story of artisans, darkness, and light.</p>
-          <button class="btn btn-secondary" onclick="navigateTo('about')">Read the Story</button>
+          <button class="btn btn-ghost" onclick="navigateTo('about')">Read the Story</button>
         </article>
         <article class="journal-card">
           <span class="journal-tag">Rituals</span>
           <h3>The perfect evening fragrance ritual</h3>
           <p>Layering scent is an art. Discover the ritual of pairing NOCTURNE with a warm cashmere scarf and slow-burning incense.</p>
-          <button class="btn btn-secondary" onclick="navigateTo('shop'); renderShopProducts('spicy')">Explore Rituals</button>
+          <button class="btn btn-ghost" onclick="navigateTo('shop'); renderShopProducts('spicy')">Explore Rituals</button>
         </article>
         <article class="journal-card">
           <span class="journal-tag">Portrait</span>
           <h3>Meet the ingredients that define luxury</h3>
-          <p>Marine ambergris, smoked rose, and liquid gold—the raw materials that carry both rare provenance and mystique.</p>
-          <button class="btn btn-secondary" onclick="openProfilerQuiz()">Find Your Match</button>
+          <p>Marine ambergris, smoked rose, and liquid gold: the raw materials that carry both rare provenance and mystique.</p>
+          <button class="btn btn-ghost" onclick="openProfilerQuiz()">Find Your Match</button>
         </article>
       </div>
     </section>
 
     <!-- PAGE 6: CONTACT PAGE -->
     <section id="page-contact" class="page-panel">
-      <div class="contact-panel reveal-left">
-        <h1>Contact AUREUM</h1>
-        <p>For bespoke consultations, gifting requests, and atelier appointments, reach out directly to our concierge team.</p>
-        <div class="contact-details">
-          <div>
-            <strong>Email</strong>
-            <p>hello@aureumparfums.com</p>
-          </div>
-          <div>
-            <strong>Phone</strong>
-            <p>+1 (212) 555-0198</p>
-          </div>
-          <div>
-            <strong>Studio Hours</strong>
-            <p>Mon - Fri: 10am - 6pm</p>
+      <div class="contact-layout reveal-left">
+        <div class="contact-intro">
+          <span class="section-overline">Concierge</span>
+          <h1 class="page-title">Contact <em>AUREUM</em></h1>
+          <p class="page-lede">For bespoke consultations, gifting requests, and atelier appointments, reach out directly to our concierge team.</p>
+          <div class="contact-details">
+            <div>
+              <strong>Email</strong>
+              <p>hello@aureumparfums.com</p>
+            </div>
+            <div>
+              <strong>Phone</strong>
+              <p>+1 (212) 555-0198</p>
+            </div>
+            <div>
+              <strong>Studio Hours</strong>
+              <p>Mon to Fri, 10am to 6pm</p>
+            </div>
           </div>
         </div>
-        <form class="contact-form" onsubmit="event.preventDefault(); showToast('Thank you — we will reply shortly.');">
+        <form class="contact-form" onsubmit="event.preventDefault(); showToast('Thank you. We will reply shortly.');">
           <label>
             Your name
             <input type="text" name="name" placeholder="Enter your name" required>
@@ -477,7 +477,7 @@
       <div class="legal-panel reveal-left">
         <h1>Terms of Service</h1>
         <p>These terms define your experience with AUREUM Parfums, from purchase to delivery. Our goal is transparency, refined service, and dependable support at every stage.</p>
-        <h2>Purchase & Appointment Commitments</h2>
+        <h2>Purchase &amp; Appointment Commitments</h2>
         <p>Orders placed through this site are subject to product availability and confirmation. Bespoke consultation bookings are confirmed once our concierge team replies to your request.</p>
         <h2>Service Standards</h2>
         <p>We strive for accuracy in product descriptions, timely order handling, and responsive customer service. If anything falls short, contact us and we will resolve it with care.</p>
@@ -487,11 +487,11 @@
     <!-- PAGE 9: SHIPPING & RETURNS -->
     <section id="page-shipping" class="page-panel">
       <div class="legal-panel reveal-left">
-        <h1>Shipping & Returns</h1>
+        <h1>Shipping &amp; Returns</h1>
         <p>AUREUM ships with premium care, offering secure packaging and tracking on every order. Shipping timelines vary by location, with priority handling for domestic and international delivery.</p>
         <h2>Shipping Policy</h2>
-        <p>Orders are processed within 1–2 business days. International shipments may require additional customs processing, and deliveries are sent via trusted couriers.</p>
-        <h2>Returns & Exchanges</h2>
+        <p>Orders are processed within 1 to 2 business days. International shipments may require additional customs processing, and deliveries are sent via trusted couriers.</p>
+        <h2>Returns &amp; Exchanges</h2>
         <p>If your fragrance arrives damaged or you have a genuine concern, contact us within 7 days for guidance. Returns are handled with discretion and a commitment to your satisfaction.</p>
       </div>
     </section>
@@ -504,17 +504,15 @@
     <div class="cart-header">
       <h2 id="cartTitle">Shopping Bag</h2>
       <button class="close-cart-btn" id="closeCartBtn" aria-label="Close Cart">
-        <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
-          <line fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" x1="18" y1="6" x2="6" y2="18" />
-          <line fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" x1="6" y1="6" x2="18" y2="18" />
+        <svg class="icon" viewBox="0 0 24 24" width="22" height="22">
+          <line fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" x1="18" y1="6" x2="6" y2="18" />
+          <line fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
     </div>
 
-    <!-- Cart items container -->
     <div class="cart-content-wrapper">
       <div class="cart-items" id="cartItems">
-        <!-- Dynamic cart items rendered here -->
         <div class="empty-cart-message">
           <p>Your shopping bag is empty.</p>
           <button class="btn btn-primary" onclick="navigateTo('shop'); closeCart();">Shop Now</button>
@@ -527,22 +525,23 @@
         <span>Subtotal</span>
         <span id="cartSubtotal">$0.00</span>
       </div>
-      <p class="shipping-notice">Complimentary priority shipping & sample set included.</p>
+      <p class="shipping-notice">Complimentary priority shipping &amp; sample set included.</p>
       <button class="btn btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
     </div>
   </aside>
 
-  <!-- Scent Note Explanation Modal (Interactive note details) -->
+  <!-- Scent Note Explanation Modal -->
   <div class="modal-overlay" id="noteModal">
     <div class="modal-card">
-      <button class="modal-close" onclick="closeNoteModal()">&times;</button>
+      <button class="modal-close" onclick="closeNoteModal()" aria-label="Close">&times;</button>
       <div id="noteModalContent">
-        <!-- Note details will render here dynamically -->
+        <!-- Note details render here dynamically -->
       </div>
     </div>
   </div>
 
   <footer class="app-footer">
+    <div class="footer-wordmark" aria-hidden="true">AUREUM</div>
     <div class="footer-container">
       <div class="footer-brand">
         <span class="logo">AUREUM</span>
@@ -555,7 +554,7 @@
             <li><a href="#" onclick="navigateTo('shop'); return false;">Fragrances</a></li>
             <li><a href="#" onclick="navigateTo('about'); return false;">Our Craft</a></li>
             <li>
-              <a href="#">Bespoke Consultation</a>
+              <a href="#" onclick="navigateTo('contact'); return false;">Bespoke Consultation</a>
               <p class="footer-note">Schedule a private session for scent profiling, gifting direction, and custom fragrance pairing.</p>
             </li>
           </ul>
@@ -563,18 +562,9 @@
         <div>
           <h4>Legal</h4>
           <ul>
-            <li>
-              <a href="#privacy" onclick="navigateTo('privacy'); return false;">Privacy Policy</a>
-              <p class="footer-note">We protect your information with discreet handling and secure data practices.</p>
-            </li>
-            <li>
-              <a href="#terms" onclick="navigateTo('terms'); return false;">Terms of Service</a>
-              <p class="footer-note">Review our boutique purchase terms, appointment guidelines, and customer care standards.</p>
-            </li>
-            <li>
-              <a href="#shipping" onclick="navigateTo('shipping'); return false;">Shipping & Returns</a>
-              <p class="footer-note">Learn about delivery timelines, international shipping, and our refined returns process.</p>
-            </li>
+            <li><a href="#privacy" onclick="navigateTo('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#terms" onclick="navigateTo('terms'); return false;">Terms of Service</a></li>
+            <li><a href="#shipping" onclick="navigateTo('shipping'); return false;">Shipping &amp; Returns</a></li>
           </ul>
         </div>
       </div>

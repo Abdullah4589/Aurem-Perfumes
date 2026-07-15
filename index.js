@@ -388,139 +388,40 @@ const PRODUCTS = {
 let cart = [];
 let currentStyle = 'classic';
 let currentPage = 'home';
-let typingTimers = [];
-
-function clearAllTypingTimers() {
-  typingTimers.forEach(t => clearTimeout(t));
-  typingTimers = [];
-}
 
 // ==========================================================================
-// 2. TYPING EFFECT IMPLEMENTATION
+// 2. HERO CASCADE REVEAL
 // ==========================================================================
 function triggerTypingEffect() {
   const brandEl = document.getElementById('heroBrandName');
   const taglineEl = document.getElementById('heroTagline');
-  const descEl = document.getElementById('heroDescription');
-  const btnShopEl = document.getElementById('heroBtnShop');
-  const btnAboutEl = document.getElementById('heroBtnAbout');
-  
-  if (!brandEl || !taglineEl || !descEl || !btnShopEl || !btnAboutEl) return;
+  const heroContent = document.querySelector('.hero-content');
 
-  // Cancel any ongoing typing intervals
-  clearAllTypingTimers();
+  if (!brandEl || !taglineEl || !heroContent) return;
 
-  // Reset text contents and classes
-  brandEl.innerHTML = '';
-  taglineEl.innerHTML = '';
-  descEl.innerHTML = '';
-  btnShopEl.innerHTML = '';
-  btnAboutEl.innerHTML = '';
-  
-  brandEl.className = 'typing-name';
-  taglineEl.className = 'typing-tagline';
-  descEl.className = 'hero-intro-text';
-  btnShopEl.className = 'btn btn-primary btn-typewriter';
-  btnAboutEl.className = 'btn btn-secondary btn-typewriter';
-  
-  brandEl.style.borderRight = '';
-  taglineEl.style.borderRight = '';
-  descEl.style.borderRight = '';
-  btnShopEl.style.borderRight = '';
-  btnAboutEl.style.borderRight = '';
-
-  const brandText = "AUREUM";
   let taglineText = "Liquid gold, bottled darkness.";
   if (currentStyle === 'minimalist') {
-    taglineText = "STARK CONTRAST. SILENT LUXURY.";
+    taglineText = "Stark contrast. Silent luxury.";
   } else if (currentStyle === 'obsidian') {
     taglineText = "Liquid velvet, obsidian glass.";
   }
-  const descText = "Immerse yourself in sensory art. Bespoke, luxurious fragrances crafted from rare raw ingredients and pure gold flakes.";
-  const btnShopText = "Explore Shop";
-  const btnAboutText = "Our Story";
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  taglineEl.textContent = taglineText;
 
-  if (prefersReducedMotion) {
-    brandEl.textContent = brandText;
-    taglineEl.textContent = taglineText;
-    descEl.textContent = descText;
-    btnShopEl.textContent = btnShopText;
-    btnAboutEl.textContent = btnAboutText;
-    btnShopEl.classList.add('typing-active');
-    btnAboutEl.classList.add('typing-active');
-    return;
-  }
+  // Split brand name into letter spans with a staggered delay index
+  const brandText = brandEl.getAttribute('aria-label') || 'AUREUM';
+  brandEl.innerHTML = brandText
+    .split('')
+    .map((ch, i) => `<span class="char" style="--char-i:${i}">${ch}</span>`)
+    .join('');
 
-  // Step 1: Type Brand Name (slow, majestic typing)
-  brandEl.classList.add('cursor-active');
-  typeText(brandEl, brandText, 100, () => {
-    brandEl.classList.remove('cursor-active');
-    brandEl.style.borderRight = 'none';
-    
-    // Step 2: Type Tagline
-    taglineEl.classList.add('cursor-active');
-    typeText(taglineEl, taglineText, 45, () => {
-      taglineEl.classList.remove('cursor-active');
-      taglineEl.style.borderRight = 'none';
-      
-      // Step 3: Type Description
-      descEl.classList.add('cursor-active');
-      typeText(descEl, descText, 20, () => {
-        descEl.classList.remove('cursor-active');
-        descEl.style.borderRight = 'none';
-        
-        // Step 4: Type Button 1 (Explore Shop)
-        btnShopEl.classList.add('typing-active');
-        btnShopEl.classList.add('cursor-active');
-        typeText(btnShopEl, btnShopText, 35, () => {
-          btnShopEl.classList.remove('cursor-active');
-          btnShopEl.style.borderRight = 'none';
-          
-          // Step 5: Type Button 2 (Our Story)
-          btnAboutEl.classList.add('typing-active');
-          btnAboutEl.classList.add('cursor-active');
-          typeText(btnAboutEl, btnAboutText, 35, () => {
-            btnAboutEl.classList.remove('cursor-active');
-            btnAboutEl.style.borderRight = 'none';
-          });
-        });
-      });
-    });
-  });
-}
+  // Restart the cascade: clear state, force a reflow, then re-apply so
+  // the transitions replay from their initial values
+  brandEl.classList.remove('is-revealed');
+  heroContent.classList.remove('hero-in');
+  void brandEl.offsetWidth;
 
-function typeText(element, text, speed, callback) {
-  let index = 0;
-  function step() {
-    if (index < text.length) {
-      const char = text.charAt(index);
-      element.textContent += char;
-      index++;
-      
-      // Calculate dynamic human-like delay
-      let delay = speed;
-      
-      // Keystroke timing variance (+/- 30%)
-      const jitter = Math.random() * (speed * 0.6) - (speed * 0.3);
-      delay += jitter;
-      
-      // Human typing punctuation/word break simulations
-      if (char === ' ') {
-        delay += 90; // Natural break between words
-      } else if (char === '.' || char === '!' || char === '?') {
-        delay += 380; // Clause/sentence endings pause
-      } else if (char === ',' || char === ';') {
-        delay += 180; // Mid-clause comma pause
-      }
-      
-      const timer = setTimeout(step, delay);
-      typingTimers.push(timer);
-    } else {
-      if (callback) callback();
-    }
-  }
-  step();
+  brandEl.classList.add('is-revealed');
+  heroContent.classList.add('hero-in');
 }
 
 // ==========================================================================
@@ -707,8 +608,12 @@ function renderShopProducts(filter = 'all') {
     card.className = 'product-card';
     card.setAttribute('onclick', `viewProductDetail('${prod.id}')`);
 
+    const badge = prod.category === 'limited'
+      ? '<span class="card-badge">Limited Edition</span>'
+      : (prod.category === 'set' ? '<span class="card-badge">Gift Set</span>' : '');
+
     card.innerHTML = `
-      <span class="card-badge">Bestseller</span>
+      ${badge}
       <div class="product-img-container">
         <img src="${prod.image}" alt="${prod.name}" class="product-img">
       </div>
@@ -778,7 +683,7 @@ function viewProductDetail(productId) {
           <span class="qty-val" id="detailQtyVal">1</span>
           <button class="qty-btn" onclick="adjustDetailQty(1)" aria-label="Increase quantity">&plus;</button>
         </div>
-        <button class="btn btn-primary" onclick="addDetailToCart('${product.id}')" style="flex: 1;">Add to Shopping Bag</button>
+        <button class="btn btn-primary detail-add-btn" onclick="addDetailToCart('${product.id}')">Add to Shopping Bag</button>
       </div>
 
       <!-- Scent Note Explorer Pyramid -->
@@ -816,10 +721,10 @@ function viewProductDetail(productId) {
         </div>
       </div>
 
-      <!-- Scent Layering (New Content) -->
-      <div class="scent-layering-container reveal-left" style="margin-top: 30px; border: var(--border-style); border-radius: var(--border-radius); background: var(--bg-section); padding: 25px;">
-        <h3 style="font-family: var(--font-header); font-size: 1.1rem; letter-spacing: 0.1em; margin-bottom: 15px; color: var(--accent-color);">Olfactory Layering Harmony</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+      <!-- Scent Layering -->
+      <div class="scent-layering-container">
+        <h3>Olfactory Layering Harmony</h3>
+        <p>
           This archetype layers beautifully with other elements in our catalog. Spritzing <strong>${product.name}</strong> as a base, followed by a lighter layer of <strong>${productId === 'aureum' ? 'ÉCLIPSE' : 'AUREUM'}</strong>, creates a bespoke, dry ambery incense trail.
         </p>
       </div>
@@ -1040,16 +945,16 @@ function initCartUI() {
         const cartSubtotal = document.getElementById('cartSubtotal');
         if (cartItems && cartSubtotal) {
           cartItems.innerHTML = `
-            <div style="text-align:center; padding: 40px 0; display:flex; flex-direction:column; align-items:center; gap:16px;">
-              <svg viewBox="0 0 24 24" width="48" height="48" style="color: var(--accent-color);">
-                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-                <polyline points="16 9 11 14 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="order-success">
+              <svg viewBox="0 0 24 24" width="48" height="48">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <polyline points="16 9 11 14 8 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <h3 style="font-family: var(--font-header); font-size:1.4rem; letter-spacing:0.1em; color: var(--accent-color);">ORDER SECURED</h3>
-              <p style="color:var(--text-muted); font-size:0.85rem; max-width:280px; line-height:1.6;">
+              <h3>Order Secured</h3>
+              <p>
                 Thank you for choosing AUREUM. An email confirmation has been sent, and your priority shipment will prepare shortly.
               </p>
-              <button class="btn btn-primary" onclick="resetCartAndClose()" style="margin-top:12px;">Return to Shop</button>
+              <button class="btn btn-primary" onclick="resetCartAndClose()">Return to Shop</button>
             </div>
           `;
           cartSubtotal.textContent = "$0.00";
@@ -1207,9 +1112,9 @@ function renderQuizStep(content) {
         <div class="note-tier">Olfactory Profiling - Step ${quizState.step + 1} of 3</div>
         <h3>${cur.q}</h3>
       </div>
-      <div class="note-modal-body" style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
-        ${cur.options.map((opt, i) => `
-          <button class="btn btn-secondary" onclick="answerQuizStep('${opt.style}')" style="width:100%; text-align:left; justify-content:flex-start; padding:15px 20px; border: var(--border-style); border-radius: var(--border-radius); background: var(--bg-section);">
+      <div class="quiz-options">
+        ${cur.options.map((opt) => `
+          <button class="quiz-option" onclick="answerQuizStep('${opt.style}')">
             ${opt.text}
           </button>
         `).join('')}
@@ -1238,15 +1143,15 @@ function renderQuizStep(content) {
     }
 
     content.innerHTML = `
-      <div class="note-modal-header" style="text-align:center;">
-        <div class="note-tier">OLFACTORY PROFILE MATCH</div>
-        <h3 style="color:var(--accent-color); margin-top: 10px;">${resultTitle}</h3>
+      <div class="note-modal-header">
+        <div class="note-tier">Olfactory Profile Match</div>
+        <h3>${resultTitle}</h3>
       </div>
-      <div class="note-modal-body" style="text-align:center; padding:20px 0;">
-        <p style="margin-bottom:20px; color: var(--text-muted); font-size: 0.95rem;">${resultDesc}</p>
-        <div style="display:flex; gap:12px; justify-content:center;">
-          <button class="btn btn-primary" onclick="applyQuizResultTheme('${resultStyle}', '${matchPerfume}')">Apply Archetype & View Scent</button>
-          <button class="btn btn-secondary" onclick="closeNoteModal()">Close</button>
+      <div class="quiz-result">
+        <p>${resultDesc}</p>
+        <div class="quiz-result-actions">
+          <button class="btn btn-primary" onclick="applyQuizResultTheme('${resultStyle}', '${matchPerfume}')">View Your Scent</button>
+          <button class="btn btn-ghost" onclick="closeNoteModal()">Close</button>
         </div>
       </div>
     `;
@@ -1285,11 +1190,13 @@ window.addEventListener('click', (e) => {
 // 9. SCROLL REVEAL OBSERVER
 // ==========================================================================
 function initScrollReveal() {
-  const options = {
-    root: null,
-    rootMargin: '0px 0px -10% 0px', // Trigger slightly before scrolling into view
-    threshold: 0.1
-  };
+  const revealElements = document.querySelectorAll('.reveal-left');
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+    revealElements.forEach(el => el.classList.add('revealed'));
+    return;
+  }
 
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -1298,12 +1205,25 @@ function initScrollReveal() {
         observer.unobserve(entry.target);
       }
     });
-  }, options);
+  }, {
+    root: null,
+    rootMargin: '0px 0px -8% 0px',
+    threshold: 0.1
+  });
 
-  const revealElements = document.querySelectorAll('.reveal-left');
+  // Reset all, force one reflow so the entrance transition can replay,
+  // then reveal in-view elements immediately and observe the rest
+  revealElements.forEach(el => el.classList.remove('revealed'));
+  void document.body.offsetWidth;
+
   revealElements.forEach(el => {
-    el.classList.remove('revealed'); // Reset to animate again on navigate
-    observer.observe(el);
+    const rect = el.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+    if (inView) {
+      el.classList.add('revealed');
+    } else {
+      observer.observe(el);
+    }
   });
 }
 
